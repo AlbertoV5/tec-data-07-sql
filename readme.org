@@ -6,9 +6,49 @@
 #+PROPERTY: header-args :mkdirp yes :dir . :exports both
 #+PROPERTY: header-args:shell :results drawer :wrap example :results silent
 #+PROPERTY: header-args:python :exports both :results output replace
+#+PROPERTY: header-args:sql :engine postgresql :dbhost localhost :dbuser albertovaldez :database PH-EmployeeDB :results value html
 
-* Header
+* Retirement Analysis of Pewlett Hackard
 
-* Header
+** Overview
 
-* Header
+#+NAME: attr_wrap
+#+BEGIN_SRC python :var data="" :results silent :exports none
+import xml.etree.ElementTree as ET
+
+# str
+table_string = data.split("\n")
+headers = table_string[0].split("\t")
+rows = table_string[1:-1]
+# XML
+table = ET.Element("table")
+head = ET.SubElement(table, "tr")
+for h in headers:
+    ET.SubElement(head, "th").text = h
+for r in rows:
+    row = ET.SubElement(table, "tr")
+    for cell in r.split("\t"):
+        ET.SubElement(row, "td").text = cell
+ET.dump(table)
+#+END_SRC
+
+
+#+begin_src sql :post attr_wrap(data=*this*)
+SELECT *
+        FROM departments
+        LIMIT 3;
+#+end_src
+
+#+RESULTS:
+#+begin_export html
+<table><tr><th>dept_no</th><th>dept_name</th></tr><tr><td>d001</td><td>Marketing</td></tr><tr><td>d002</td><td>Finance</td></tr><tr><td>d003</td><td>Human Resources</td></tr></table>
+#+end_export
+
+
+
+
+** Results
+
+** Summary
+
+** Closing Thoughts

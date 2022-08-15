@@ -26,6 +26,7 @@ format
         :recursive t
         ;;:makeindex t
       )))
+(setq org-export-with-tables t)
 (setq format ".html")
 #+end_src
 
