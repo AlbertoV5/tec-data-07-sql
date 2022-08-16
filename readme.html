@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-08-15 Mon 19:56 -->
+<!-- 2022-08-15 Mon 20:05 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Challenge</title>
@@ -23,44 +23,44 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgbc1cad3">Retirement Analysis of Pewlett Hackard</a>
+<li><a href="#org8a6ba99">Retirement Analysis of Pewlett Hackard</a>
 <ul>
-<li><a href="#orgab06f07">Overview</a></li>
-<li><a href="#org297f493">Results</a></li>
-<li><a href="#org4d0cfd6">Summary</a></li>
-<li><a href="#orgdfb5b5a">Closing Thoughts</a></li>
+<li><a href="#org88aca69">Overview</a></li>
+<li><a href="#orgee173c8">Results</a></li>
+<li><a href="#org2aeca9d">Summary</a></li>
+<li><a href="#org787f53a">Closing Thoughts</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgbc1cad3" class="outline-2">
-<h2 id="orgbc1cad3">Retirement Analysis of Pewlett Hackard</h2>
-<div class="outline-text-2" id="text-orgbc1cad3">
+<div id="outline-container-org8a6ba99" class="outline-2">
+<h2 id="org8a6ba99">Retirement Analysis of Pewlett Hackard</h2>
+<div class="outline-text-2" id="text-org8a6ba99">
 </div>
-<div id="outline-container-orgab06f07" class="outline-3">
-<h3 id="orgab06f07">Overview</h3>
-<div class="outline-text-3" id="text-orgab06f07">
+<div id="outline-container-org88aca69" class="outline-3">
+<h3 id="org88aca69">Overview</h3>
+<div class="outline-text-3" id="text-org88aca69">
 <p>
 In this analysis we made a series of queries to our database to obtain key information about the employees that are soon to retire from Pewlett Hackard.
 </p>
 
 <p>
-Our database contains a few tables with many relations to the employee id.
+Our database contains a few tables with many relations to the employee id. This is our database diagram:
 </p>
 
 
-<div id="orgaa30ba9" class="figure">
-<p><img src="./EmployeeDB.png" alt="EmployeeDB.png" />
+<div id="org5f5cd75" class="figure">
+<p><img src="./EmployeeDB.png" alt="EmployeeDB.png" width="400px" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org297f493" class="outline-3">
-<h3 id="org297f493">Results</h3>
-<div class="outline-text-3" id="text-org297f493">
+<div id="outline-container-orgee173c8" class="outline-3">
+<h3 id="orgee173c8">Results</h3>
+<div class="outline-text-3" id="text-orgee173c8">
 <ol class="org-ol">
 <li>All current employees that are nearing retirement, which means all those who were born between 1962 and 1965 and are currently employeed in the company.</li>
 <li>We filtered the previous result to make sure that we only get the latest title of each employee that is nearing retirement, that means that it is their current title.</li>
@@ -82,9 +82,9 @@ This is a quick example of our results.
 </div>
 
 
-<div id="outline-container-org4d0cfd6" class="outline-3">
-<h3 id="org4d0cfd6">Summary</h3>
-<div class="outline-text-3" id="text-org4d0cfd6">
+<div id="outline-container-org2aeca9d" class="outline-3">
+<h3 id="org2aeca9d">Summary</h3>
+<div class="outline-text-3" id="text-org2aeca9d">
 <p>
 We can count the number of employees that are leaving the company by summing the rows in our <code>retiring_titles</code> table.
 </p>
@@ -113,19 +113,24 @@ We want to check if there are enough employees that qualify for the mentorship p
 <table><tr><th>count</th></tr><tr><td>1549</td></tr></table>
 
 <p>
-There are only 1,549 employees in the mentorship program.
+There are only 1,549 employees in the mentorship program. Which seems like a low number of employees, so we may need to invest further in training of the next generation of Pewlett Hackard employees once the 52-55 generation retires.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgdfb5b5a" class="outline-3">
-<h3 id="orgdfb5b5a">Closing Thoughts</h3>
+<div id="outline-container-org787f53a" class="outline-3">
+<h3 id="org787f53a">Closing Thoughts</h3>
+<div class="outline-text-3" id="text-org787f53a">
+<p>
+SQL queries are a very powerful way to get information of the data in our database without needing big transformations or processing. The most powerful feature is probably the relations between the different tables, as you can construct fairly complex and powerful queries to fetch any arrangement of data you want.
+</p>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alberto Valdez</p>
-<p class="date">Created: 2022-08-15 Mon 19:56</p>
+<p class="date">Created: 2022-08-15 Mon 20:05</p>
 </div>
 </body>
 </html>

@@ -34,8 +34,9 @@ ET.dump(table)
 
 In this analysis we made a series of queries to our database to obtain key information about the employees that are soon to retire from Pewlett Hackard.
 
-Our database contains a few tables with many relations to the employee id.
+Our database contains a few tables with many relations to the employee id. This is our database diagram:
 
+#+attr_html: :width 400px
 [[./EmployeeDB.png]]
 
 ** Results
@@ -84,6 +85,8 @@ FROM mentorship_eligibilty;
 <table><tr><th>count</th></tr><tr><td>1549</td></tr></table>
 #+end_export
 
-There are only 1,549 employees in the mentorship program.
+There are only 1,549 employees in the mentorship program. Which seems like a low number of employees, so we may need to invest further in training of the next generation of Pewlett Hackard employees once the 52-55 generation retires.
 
 ** Closing Thoughts
+
+SQL queries are a very powerful way to get information of the data in our database without needing big transformations or processing. The most powerful feature is probably the relations between the different tables, as you can construct fairly complex and powerful queries to fetch any arrangement of data you want.
