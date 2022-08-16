@@ -41,20 +41,49 @@ Our database contains a few tables with many relations to the employee id. This 
 
 ** Results
 
-1. All current employees that are nearing retirement, which means all those who were born between 1962 and 1965 and are currently employeed in the company.
-2. We filtered the previous result to make sure that we only get the latest title of each employee that is nearing retirement, that means that it is their current title.
-3. We can then count how many employees per title are retiring.
-4. Finally, we will look for all current employees that can qualify for the mentorship program, which means that is all those born in 1965.
-
-This is a quick example of our results.
+1.- All current employees that are nearing retirement, which means all those who were born between 1962 and 1965 and are currently employeed in the company.
 #+begin_src sql
-SELECT *
-FROM retiring_titles;
+SELECT * FROM retirement_titles
+LIMIT 3;
 #+end_src
 
 #+RESULTS:
 #+begin_export html
-<table><tr><th>title</th><th>Employee Count</th></tr><tr><td>Senior Engineer</td><td>25916</td></tr><tr><td>Senior Staff</td><td>24926</td></tr><tr><td>Engineer</td><td>9285</td></tr><tr><td>Staff</td><td>7636</td></tr><tr><td>Technique Leader</td><td>3603</td></tr><tr><td>Assistant Engineer</td><td>1090</td></tr><tr><td>Manager</td><td>2</td></tr></table>
+<table><tr><th>emp_no</th><th>first_name</th><th>last_name</th><th>title</th><th>from_date</th><th>to_date</th></tr><tr><td>10001</td><td>Georgi</td><td>Facello</td><td>Senior Engineer</td><td>1986-06-26</td><td>9999-01-01</td></tr><tr><td>10004</td><td>Chirstian</td><td>Koblick</td><td>Engineer</td><td>1986-12-01</td><td>1995-12-01</td></tr><tr><td>10004</td><td>Chirstian</td><td>Koblick</td><td>Senior Engineer</td><td>1995-12-01</td><td>9999-01-01</td></tr></table>
+#+end_export
+
+2.- We filtered the previous result to make sure that we only get the latest title of each employee that is nearing retirement, that means that it is their current title.
+#+begin_src sql
+SELECT * FROM unique_titles
+LIMIT 3;
+#+end_src
+
+#+RESULTS:
+#+begin_export html
+<table><tr><th>emp_no</th><th>first_name</th><th>last_name</th><th>title</th><th>from_date</th><th>to_date</th></tr><tr><td>10001</td><td>Georgi</td><td>Facello</td><td>Senior Engineer</td><td>1986-06-26</td><td>9999-01-01</td></tr><tr><td>10004</td><td>Chirstian</td><td>Koblick</td><td>Senior Engineer</td><td>1995-12-01</td><td>9999-01-01</td></tr><tr><td>10005</td><td>Kyoichi</td><td>Maliniak</td><td>Senior Staff</td><td>1996-09-12</td><td>9999-01-01</td></tr></table>
+#+end_export
+
+3.- We can then count how many employees per title are retiring.
+#+begin_src sql
+SELECT * FROM retiring_titles
+LIMIT 3;
+#+end_src
+
+#+RESULTS:
+#+begin_export html
+<table><tr><th>title</th><th>Employee Count</th></tr><tr><td>Senior Engineer</td><td>25916</td></tr><tr><td>Senior Staff</td><td>24926</td></tr><tr><td>Engineer</td><td>9285</td></tr></table>
+#+end_export
+
+4.- Finally, we will look for all current employees that can qualify for the mentorship program, which means that is all those born in 1965.
+
+#+begin_src sql
+SELECT * FROM mentorship_eligibilty
+LIMIT 3;
+#+end_src
+
+#+RESULTS:
+#+begin_export html
+<table><tr><th>emp_no</th><th>first_name</th><th>last_name</th><th>birth_date</th><th>from_date</th><th>to_date</th><th>title</th></tr><tr><td>10095</td><td>Hilari</td><td>Morton</td><td>1965-01-03</td><td>1994-03-10</td><td>9999-01-01</td><td>Senior Staff</td></tr><tr><td>10122</td><td>Ohad</td><td>Esposito</td><td>1965-01-19</td><td>1998-08-06</td><td>9999-01-01</td><td>Technique Leader</td></tr><tr><td>10291</td><td>Dipayan</td><td>Seghrouchni</td><td>1965-01-23</td><td>1987-03-30</td><td>9999-01-01</td><td>Senior Staff</td></tr></table>
 #+end_export
 
 
