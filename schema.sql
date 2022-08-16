@@ -1,4 +1,3 @@
--- Creating tables for PH-EmployeeDB
 -- DROP TABLE IF EXISTS departments CASCADE;
 -- DROP TABLE IF EXISTS dept_manager CASCADE;
 -- DROP TABLE IF EXISTS titles CASCADE;
