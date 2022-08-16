@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-08-15 Mon 18:28 -->
+<!-- 2022-08-15 Mon 19:56 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Challenge</title>
@@ -23,55 +23,109 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org923f093">Retirement Analysis of Pewlett Hackard</a>
+<li><a href="#orgbc1cad3">Retirement Analysis of Pewlett Hackard</a>
 <ul>
-<li><a href="#orge9184c2">Overview</a></li>
-<li><a href="#org6b428cb">Results</a></li>
-<li><a href="#orgec6ff7e">Summary</a></li>
-<li><a href="#org5bbb40c">Closing Thoughts</a></li>
+<li><a href="#orgab06f07">Overview</a></li>
+<li><a href="#org297f493">Results</a></li>
+<li><a href="#org4d0cfd6">Summary</a></li>
+<li><a href="#orgdfb5b5a">Closing Thoughts</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org923f093" class="outline-2">
-<h2 id="org923f093">Retirement Analysis of Pewlett Hackard</h2>
-<div class="outline-text-2" id="text-org923f093">
+<div id="outline-container-orgbc1cad3" class="outline-2">
+<h2 id="orgbc1cad3">Retirement Analysis of Pewlett Hackard</h2>
+<div class="outline-text-2" id="text-orgbc1cad3">
 </div>
-<div id="outline-container-orge9184c2" class="outline-3">
-<h3 id="orge9184c2">Overview</h3>
-<div class="outline-text-3" id="text-orge9184c2">
+<div id="outline-container-orgab06f07" class="outline-3">
+<h3 id="orgab06f07">Overview</h3>
+<div class="outline-text-3" id="text-orgab06f07">
+<p>
+In this analysis we made a series of queries to our database to obtain key information about the employees that are soon to retire from Pewlett Hackard.
+</p>
+
+<p>
+Our database contains a few tables with many relations to the employee id.
+</p>
+
+
+<div id="orgaa30ba9" class="figure">
+<p><img src="./EmployeeDB.png" alt="EmployeeDB.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org297f493" class="outline-3">
+<h3 id="org297f493">Results</h3>
+<div class="outline-text-3" id="text-org297f493">
+<ol class="org-ol">
+<li>All current employees that are nearing retirement, which means all those who were born between 1962 and 1965 and are currently employeed in the company.</li>
+<li>We filtered the previous result to make sure that we only get the latest title of each employee that is nearing retirement, that means that it is their current title.</li>
+<li>We can then count how many employees per title are retiring.</li>
+<li>Finally, we will look for all current employees that can qualify for the mentorship program, which means that is all those born in 1965.</li>
+</ol>
+
+<p>
+This is a quick example of our results.
+</p>
 <div class="org-src-container">
 <pre class="src src-sql"><span style="color: #339CDB;">SELECT</span> *
-        <span style="color: #339CDB;">FROM</span> departments
-        <span style="color: #339CDB;">LIMIT</span> <span style="color: #B5CEA8; font-weight: bold;">3</span>;
+<span style="color: #339CDB;">FROM</span> retiring_titles;
 </pre>
 </div>
 
-<table><tr><th>dept_no</th><th>dept_name</th></tr><tr><td>d001</td><td>Marketing</td></tr><tr><td>d002</td><td>Finance</td></tr><tr><td>d003</td><td>Human Resources</td></tr></table>
+<table><tr><th>title</th><th>Employee Count</th></tr><tr><td>Senior Engineer</td><td>25916</td></tr><tr><td>Senior Staff</td><td>24926</td></tr><tr><td>Engineer</td><td>9285</td></tr><tr><td>Staff</td><td>7636</td></tr><tr><td>Technique Leader</td><td>3603</td></tr><tr><td>Assistant Engineer</td><td>1090</td></tr><tr><td>Manager</td><td>2</td></tr></table>
 </div>
 </div>
 
 
+<div id="outline-container-org4d0cfd6" class="outline-3">
+<h3 id="org4d0cfd6">Summary</h3>
+<div class="outline-text-3" id="text-org4d0cfd6">
+<p>
+We can count the number of employees that are leaving the company by summing the rows in our <code>retiring_titles</code> table.
+</p>
 
-
-<div id="outline-container-org6b428cb" class="outline-3">
-<h3 id="org6b428cb">Results</h3>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #339CDB;">SELECT</span> <span style="color: #C586C0;">SUM</span>("Employee <span style="color: #C586C0;">Count</span>")
+<span style="color: #339CDB;">FROM</span> retiring_titles;
+</pre>
 </div>
 
-<div id="outline-container-orgec6ff7e" class="outline-3">
-<h3 id="orgec6ff7e">Summary</h3>
+<table><tr><th>sum</th></tr><tr><td>72458</td></tr></table>
+
+<p>
+That means we will need to fill 72,458 positions in the company once those employees retire.
+</p>
+
+<p>
+We want to check if there are enough employees that qualify for the mentorship program. So we can get the sum from our other table.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #339CDB;">SELECT</span> <span style="color: #C586C0;">COUNT</span>(emp_no)
+<span style="color: #339CDB;">FROM</span> mentorship_eligibilty;
+</pre>
 </div>
 
-<div id="outline-container-org5bbb40c" class="outline-3">
-<h3 id="org5bbb40c">Closing Thoughts</h3>
+<table><tr><th>count</th></tr><tr><td>1549</td></tr></table>
+
+<p>
+There are only 1,549 employees in the mentorship program.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdfb5b5a" class="outline-3">
+<h3 id="orgdfb5b5a">Closing Thoughts</h3>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alberto Valdez</p>
-<p class="date">Created: 2022-08-15 Mon 18:28</p>
+<p class="date">Created: 2022-08-15 Mon 19:56</p>
 </div>
 </body>
 </html>

@@ -6,49 +6,84 @@
 #+PROPERTY: header-args :mkdirp yes :dir . :exports both
 #+PROPERTY: header-args:shell :results drawer :wrap example :results silent
 #+PROPERTY: header-args:python :exports both :results output replace
-#+PROPERTY: header-args:sql :engine postgresql :dbhost localhost :dbuser albertovaldez :database PH-EmployeeDB :results value html
+#+PROPERTY: header-args:sql :engine postgresql :dbhost localhost :dbuser albertovaldez :database PH-EmployeeDB :results value html :post attr_wrap(data=*this*)
 
 * Retirement Analysis of Pewlett Hackard
 
-** Overview
 
 #+NAME: attr_wrap
 #+BEGIN_SRC python :var data="" :results silent :exports none
 import xml.etree.ElementTree as ET
 
-# str
-table_string = data.split("\n")
-headers = table_string[0].split("\t")
-rows = table_string[1:-1]
+def build_row(parent, data, tag):
+    child = ET.SubElement(parent, "tr")
+    for s in data.split("\t"):
+        ET.SubElement(child, tag).text = s
+    return child
 # XML
+data = data.split("\n")
 table = ET.Element("table")
-head = ET.SubElement(table, "tr")
-for h in headers:
-    ET.SubElement(head, "th").text = h
-for r in rows:
-    row = ET.SubElement(table, "tr")
-    for cell in r.split("\t"):
-        ET.SubElement(row, "td").text = cell
+build_row(table, data[0], "th")
+for row in data[1:-1]:
+    build_row(table, row, "td")
 ET.dump(table)
 #+END_SRC
 
 
-#+begin_src sql :post attr_wrap(data=*this*)
+** Overview
+
+In this analysis we made a series of queries to our database to obtain key information about the employees that are soon to retire from Pewlett Hackard.
+
+Our database contains a few tables with many relations to the employee id.
+
+[[./EmployeeDB.png]]
+
+** Results
+
+1. All current employees that are nearing retirement, which means all those who were born between 1962 and 1965 and are currently employeed in the company.
+2. We filtered the previous result to make sure that we only get the latest title of each employee that is nearing retirement, that means that it is their current title.
+3. We can then count how many employees per title are retiring.
+4. Finally, we will look for all current employees that can qualify for the mentorship program, which means that is all those born in 1965.
+
+This is a quick example of our results.
+#+begin_src sql
 SELECT *
-        FROM departments
-        LIMIT 3;
+FROM retiring_titles;
 #+end_src
 
 #+RESULTS:
 #+begin_export html
-<table><tr><th>dept_no</th><th>dept_name</th></tr><tr><td>d001</td><td>Marketing</td></tr><tr><td>d002</td><td>Finance</td></tr><tr><td>d003</td><td>Human Resources</td></tr></table>
+<table><tr><th>title</th><th>Employee Count</th></tr><tr><td>Senior Engineer</td><td>25916</td></tr><tr><td>Senior Staff</td><td>24926</td></tr><tr><td>Engineer</td><td>9285</td></tr><tr><td>Staff</td><td>7636</td></tr><tr><td>Technique Leader</td><td>3603</td></tr><tr><td>Assistant Engineer</td><td>1090</td></tr><tr><td>Manager</td><td>2</td></tr></table>
 #+end_export
 
 
-
-
-** Results
-
 ** Summary
+
+We can count the number of employees that are leaving the company by summing the rows in our =retiring_titles= table.
+
+#+begin_src sql
+SELECT SUM("Employee Count")
+FROM retiring_titles;
+#+end_src
+
+#+RESULTS:
+#+begin_export html
+<table><tr><th>sum</th></tr><tr><td>72458</td></tr></table>
+#+end_export
+
+That means we will need to fill 72,458 positions in the company once those employees retire.
+
+We want to check if there are enough employees that qualify for the mentorship program. So we can get the sum from our other table.
+#+begin_src sql
+SELECT COUNT(emp_no)
+FROM mentorship_eligibilty;
+#+end_src
+
+#+RESULTS:
+#+begin_export html
+<table><tr><th>count</th></tr><tr><td>1549</td></tr></table>
+#+end_export
+
+There are only 1,549 employees in the mentorship program.
 
 ** Closing Thoughts
